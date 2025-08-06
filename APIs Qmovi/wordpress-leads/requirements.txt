@@ -1,0 +1,5 @@
+flask
+requests
+# jsonify > é uma função do flask , já está incluído.
+gunicorn
+python-dotenv
