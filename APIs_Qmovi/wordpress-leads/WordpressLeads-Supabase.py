@@ -34,9 +34,29 @@ def receber_lead():
         if not data:
             return jsonify({"erro": "Nenhum dado recebido"}), 400
         
-        print('Dados recebidos:', data)
+        print('Dados recebidos (originais):', data)
 
+        # filtrar e normalizar só os campo desejados (Prompt pronto de vários lugares)
+        campos_desejados = {
+            'nome': 'nome',
+            'telefone' : 'telefone',
+            'empresa': 'empresa',
+            'cnpj': 'cnpj',
+            'e-mail': 'email',
+            'e_mail': 'email'
 
+        }
+
+        dados_normalizados = {}
+        for chave_recebida, valor in data.items():
+            chave_formatada = chave_recebida.strip().lower().replace(" ", " _ ").replace("-", "_")
+            if chave_formatada in campos_desejados:
+                nome_final = campos_desejados[chave_formatada]
+                dados_normalizados[nome_final] = valor
+        
+        print('Dados normalizados:', dados_normalizados)
+
+            
         # manda as informacoes recebidas pro supa
         response = requests.post(
             SUPABASE_URL,
