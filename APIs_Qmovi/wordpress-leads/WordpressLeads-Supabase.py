@@ -17,13 +17,24 @@ SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
 @app.route('/receber-lead', methods=['POST'])
 def receber_lead():
     try:
+
         # pega os dado json enviado pelo formulário
-        data = request.get_json(silent=True)
-        if not data:
+
+        content_type = request.headers.get('Content-Type')
+
+
+        if content_type == 'application/json':
+            data = request.get_json()
+
+        elif content_type.startswith('application/x-www-form-urlencoded') or content_type.startswith('multipart/form-data'):
             data = request.form.to_dict()
+        else:
+            return jsonify({"erro": "Formato de conteúdo não suportado"}), 400
 
         if not data:
             return jsonify({"erro": "Nenhum dado recebido"}), 400
+        
+        print('Dados recebidos:', data)
 
 
         # manda as informacoes recebidas pro supa
