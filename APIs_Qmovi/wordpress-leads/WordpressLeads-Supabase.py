@@ -70,7 +70,7 @@ def receber_lead():
         )
 
         if response.status_code in (200, 201):
-            return jsonify({"mensagem": "Dados inseridos com sucesso!"}), 201
+            return jsonify({"mensagem": "Dados inseridos com sucesso!"}), 200
         else:
             return jsonify({
                 "erro": "Falha ao inserir no Supabase",
@@ -87,3 +87,50 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', port=port)
 
 
+
+
+
+
+# from flask import Flask, request, jsonify
+# from flask_cors import CORS
+# from supabase import create_client
+
+# app = Flask(__name__)
+# CORS(app)
+
+# # Supabase setup
+# url = "https://xxxxxxxx.supabase.co"
+# key = "sua-chave-api"
+# supabase = create_client(url, key)
+
+# @app.route("/receber-lead", methods=["POST"])
+# def receber_lead():
+#     try:
+#         data = request.get_json(force=True)
+#         print("Dados recebidos:", data)
+
+#         nome = data.get("nome", "")
+#         telefone = data.get("telefone", "")
+#         empresa = data.get("empresa", "")
+#         cnpj = data.get("cnpj", "")
+#         email = data.get("email", "")
+
+#         resultado = supabase.table("leads").insert([{
+#             "nome": nome,
+#             "telefone": telefone,
+#             "empresa": empresa,
+#             "cnpj": cnpj,
+#             "email": email
+#         }]).execute()
+
+#         print("Resultado Supabase:", resultado)
+
+#         # ✅ Retorne JSON claro e status 201
+#         return jsonify({"mensagem": "Lead recebido com sucesso"}), 201
+
+#     except Exception as e:
+#         print("Erro:", e)
+#         return jsonify({"erro": str(e)}), 500
+
+# if __name__ == "__main__":
+#     app.run(debug=True)
