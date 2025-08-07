@@ -60,7 +60,7 @@ def receber_lead():
         # manda as informacoes recebidas pro supa
         response = requests.post(
             SUPABASE_URL,
-            json=data,
+            json=dados_normalizados,
             headers={
                 "apikey": SUPABASE_KEY,
                 "Authorization": f"Bearer {SUPABASE_KEY}",
