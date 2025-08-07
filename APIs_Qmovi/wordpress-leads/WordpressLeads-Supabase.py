@@ -18,9 +18,13 @@ SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
 def receber_lead():
     try:
         # pega os dado json enviado pelo formulário
-        data = request.get_json()
+        data = request.get_json(silent=True)
+        if not data:
+            data = request.form.to_dict()
+
         if not data:
             return jsonify({"erro": "Nenhum dado recebido"}), 400
+
 
         # manda as informacoes recebidas pro supa
         response = requests.post(
@@ -50,3 +54,5 @@ def receber_lead():
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
+
+
